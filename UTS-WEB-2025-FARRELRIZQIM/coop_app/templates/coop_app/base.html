@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+  {% load static %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Coop Program</title>
+  <link rel="stylesheet" href="{% static 'coop_app/style.css' %}">
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <a href="/">
+        <img src="{% static 'coop_app/Prasmul_logo_01-Putih.png' %}" 
+             alt="Prasmul Logo" style="height:50px;">
+      </a>
+      
+      <nav>
+        <a href="/">Home</a>
+        {% if user.is_authenticated %}
+          <a href="/dashboard/">Dashboard</a>
+          <a href="/profile/">Profile</a>
+          <form id="logoutForm" method="post" action="{% url 'logout' %}" style="display:none;">
+            {% csrf_token %}
+          </form>
+          <a href="#" onclick="event.preventDefault(); document.getElementById('logoutForm').submit();">Logout</a>          
+        {% else %}
+          <a href="/login/">Login</a>
+          <a href="/register/">Register</a>
+        {% endif %}
+      </nav>
+    </div>
+  </header>
+  <main class="container">
+    {% if messages %}
+      <ul class="messages">{% for m in messages %}<li>{{ m }}</li>{% endfor %}</ul>
+    {% endif %}
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="footer">© Coop Program - Project</footer>
+  <script src="{% static 'coop_app/script.js' %}"></script>
+</body>
+</html>

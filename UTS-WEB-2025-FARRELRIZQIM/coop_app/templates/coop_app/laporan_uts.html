@@ -1,0 +1,24 @@
+{% extends "coop_app/base.html" %}
+{% block content %}
+<h2>Laporan Kemajuan Bulanan</h2>
+<div class="card p-4 mb-4">
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+
+<h3>Daftar Laporan Kemajuan</h3>
+{% for laporan in laporan_list %}
+  <div class="card p-3 mb-2">
+    <p><strong>Bulan:</strong> {{ laporan.bulan }}</p>
+    <p><strong>Profil Perusahaan:</strong> {{ laporan.profil_perusahaan }}</p>
+    <p><strong>Jobdesk:</strong> {{ laporan.jobdesk }}</p>
+    <p><strong>Suasana Kerja:</strong> {{ laporan.suasana_kerja }}</p>
+    <p><em>Submitted at {{ laporan.tanggal_submit }}</em></p>
+  </div>
+{% empty %}
+  <p>Belum ada laporan kemajuan.</p>
+{% endfor %}
+{% endblock %}

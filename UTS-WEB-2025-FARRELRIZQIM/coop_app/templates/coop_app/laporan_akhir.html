@@ -1,0 +1,21 @@
+{% extends "coop_app/base.html" %}
+{% block content %}
+<h2>Laporan Akhir</h2>
+<div class="card p-4 mb-4">
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+
+{% if laporan %}
+  <div class="card p-3">
+    <p><strong>Ringkasan:</strong> {{ laporan.ringkasan }}</p>
+    {% if laporan.file_laporan %}
+      <p><a href="{{ laporan.file_laporan.url }}" target="_blank">Download Laporan Akhir</a></p>
+    {% endif %}
+    <p><em>Dikirim: {{ laporan.tanggal_submit }}</em></p>
+  </div>
+{% endif %}
+{% endblock %}
