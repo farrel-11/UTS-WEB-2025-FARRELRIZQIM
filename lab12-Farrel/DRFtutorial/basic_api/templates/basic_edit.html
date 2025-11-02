@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Post</title>
+    <style>
+        body {
+            font-family: "Segoe UI", sans-serif;
+            background-color: #f6f7fb;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        input, select, button {
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        input[type="file"] {
+            border: none;
+        }
+
+        button {
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+        }
+
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            display: block;
+            margin: 10px auto;
+            border-radius: 8px;
+            background-color: #eee;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Edit Post</h1>
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="text" name="name" value="{{ post.name }}" placeholder="Nama" required>
+            <input type="text" name="author" value="{{ post.author }}" placeholder="Author" required>
+            <select name="rating">
+                <option value="excellent" {% if post.rating == 'excellent' %}selected{% endif %}>Excellent</option>
+                <option value="average" {% if post.rating == 'average' %}selected{% endif %}>Average</option>
+                <option value="bad" {% if post.rating == 'bad' %}selected{% endif %}>Bad</option>
+            </select>
+
+            {% if post.image %}
+                <img src="{{ post.image.url }}" alt="Current Image">
+            {% endif %}
+
+            <input type="file" name="image">
+            <button type="submit">Simpan Perubahan</button>
+        </form>
+
+        <a href="{% url 'post_list' %}">← Kembali ke daftar</a>
+    </div>
+</body>
+</html>

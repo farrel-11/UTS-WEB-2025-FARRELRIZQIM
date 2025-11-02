@@ -1,0 +1,84 @@
+<!-- basic_post.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tambah Post</title>
+    <style>
+        body {
+            font-family: "Segoe UI", sans-serif;
+            background-color: #f6f7fb;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        input, select, button {
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        input[type="file"] {
+            border: none;
+        }
+
+        button {
+            cursor: pointer;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px;
+        }
+
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            color: #007bff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Tambah Post Baru</h1>
+
+        <form action="{% url 'post_create' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="text" name="name" placeholder="Nama" required>
+            <input type="text" name="author" placeholder="Author" required>
+            <select name="rating" required>
+                <option value="excellent">Excellent</option>
+                <option value="average" selected>Average</option>
+                <option value="bad">Bad</option>
+            </select>
+            <input type="file" name="image">
+            <button type="submit">Simpan Post</button>
+        </form>
+
+        <a href="{% url 'post_list' %}">← Kembali ke Daftar Post</a>
+    </div>
+</body>
+</html>

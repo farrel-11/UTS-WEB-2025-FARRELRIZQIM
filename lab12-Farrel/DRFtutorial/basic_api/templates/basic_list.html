@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post List</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f6f7fb;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        /* Container Grid */
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        /* Card Style */
+        .card {
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            background: #eee;
+        }
+
+        .card-content {
+            padding: 15px 20px;
+            flex: 1;
+        }
+
+        .card-content h3 {
+            margin: 0;
+            color: #222;
+            font-size: 1.2em;
+        }
+
+        .card-content p {
+            margin: 5px 0;
+            color: #555;
+            font-size: 0.95em;
+        }
+
+        .rating {
+            margin-top: 10px;
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 20px 15px;
+        }
+
+        .btn {
+            text-decoration: none;
+            color: white;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 0.9em;
+            transition: background 0.3s ease;
+        }
+
+        .btn-edit {
+            background-color: #17a2b8;
+        }
+
+        .btn-edit:hover {
+            background-color: #138496;
+        }
+
+        .btn-delete {
+            background-color: #dc3545;
+        }
+
+        .btn-delete:hover {
+            background-color: #c82333;
+        }
+
+        /* Upload Form */
+        .upload-form {
+            background: #fff;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .upload-form input, .upload-form select {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+
+        .upload-form button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .upload-form button:hover {
+            background-color: #0056b3;
+        }
+
+        .no-image {
+            height: 180px;
+            background: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .top-bar {
+        text-align: center;
+        margin-bottom: 30px;
+        }
+
+        .btn-add {
+            display: inline-block;
+            background: linear-gradient(135deg, #28a745, #32cd63);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3);
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-add:hover {
+            background: linear-gradient(135deg, #23913d, #2db754);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(40, 167, 69, 0.4);
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1>📚 Daftar Postingan</h1>
+
+    <div class="top-bar">
+        <a href="{% url 'post_create' %}" class="btn-add">+ Tambah Post</a>
+    </div>
+
+
+
+    <div class="card-container">
+        {% for post in posts %}
+        <div class="card">
+            {% if post.image %}
+                <img src="{{ post.image.url }}" alt="{{ post.name }}">
+            {% else %}
+                <div class="no-image">No Image</div>
+            {% endif %}
+            <div class="card-content">
+                <h3>{{ post.name }}</h3>
+                <p>👤 {{ post.author }}</p>
+                <p class="rating">Rating: {{ post.rating|title }}</p>
+                <p>📅 {{ post.uploaded|date:"d M Y - H:i" }}</p>
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'post_edit' post.pk %}" class="btn btn-edit">✏️ Edit</a>
+                <a href="{% url 'post_delete' post.pk %}" class="btn btn-delete" onclick="return confirm('Yakin ingin menghapus?')">🗑️ Hapus</a>
+            </div>
+        </div>
+        {% empty %}
+        <p style="text-align:center; color:#777;">Belum ada postingan.</p>
+        {% endfor %}
+    </div>
+
+</body>
+</html>
