@@ -1,0 +1,50 @@
+{% extends 'bookings/base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <h3 class="mb-4">Flight Results</h3>
+
+        {% if flights %}
+        <form method="POST" action="">
+            {% csrf_token %}
+            <div class="list-group">
+                {% for flight in flights %}
+                <label class="list-group-item d-flex align-items-center justify-content-between p-3 border rounded mb-2 shadow-sm">
+                    <div class="d-flex align-items-center">
+                        <input class="form-check-input me-3" type="radio" name="flight_index" value="{{ forloop.counter0 }}" required>
+                        
+                        <div>
+                            <h5 class="mb-1">
+                                {{ flight.itineraries.0.segments.0.carrierCode }} 
+                                <small class="text-muted fs-6">(Flight {{ flight.itineraries.0.segments.0.number }})</small>
+                            </h5>
+                            <p class="mb-0 text-muted">
+                                {{ flight.itineraries.0.segments.0.departure.at|slice:"11:16" }}
+                                <span class="mx-2">➝</span>
+                                {{ flight.itineraries.0.segments.0.arrival.at|slice:"11:16" }}
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="text-end">
+                        <span class="d-block fw-bold text-primary">
+                            {{ flight.price.currency }} {{ flight.price.total }}
+                        </span>
+                        <small class="text-muted">per traveler</small>
+                    </div>
+                </label>
+                {% endfor %}
+            </div>
+            
+            <div class="mt-4 text-end">
+                <button type="submit" class="btn btn-secondary px-5">Select Flight</button>
+            </div>
+        </form>
+        {% else %}
+            <div class="alert alert-warning">Tidak ada penerbangan ditemukan.</div>
+            <a href="{% url 'flight_search' %}" class="btn btn-outline-primary">Cari Ulang</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'bookings/base.html' %}
+
+{% block content %}
+<div class="text-center mt-5">
+    <div class="display-1 text-success mb-3">✅</div>
+    <h2 class="mb-3">Booking Success!</h2>
+    <p class="lead">Terima kasih, <strong>{{ name }}</strong>.</p>
+    <p>Tiket Anda sedang diproses.</p>
+    <a href="{% url 'flight_search' %}" class="btn btn-primary mt-3">Book Another Flight</a>
+</div>
+{% endblock %}

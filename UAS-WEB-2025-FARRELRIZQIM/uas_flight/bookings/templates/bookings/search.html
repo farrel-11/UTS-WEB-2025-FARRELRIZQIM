@@ -1,0 +1,102 @@
+{% extends 'bookings/base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <h3 class="card-title text-center mb-4">SEARCH FLIGHT</h3>
+                
+                {% if error %}
+                <div class="alert alert-danger">{{ error }}</div>
+                {% endif %}
+
+                <form method="POST" action="">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Departure City</label>
+                        <select name="origin" class="form-select" required>
+                            <option value="" selected disabled>Pilih Kota Asal...</option>
+                            <optgroup label="Indonesia">
+                                <option value="CGK">Jakarta - Soekarno Hatta (CGK)</option>
+                                <option value="HLP">Jakarta - Halim (HLP)</option>
+                                <option value="DPS">Bali - Ngurah Rai (DPS)</option>
+                                <option value="SUB">Surabaya - Juanda (SUB)</option>
+                                <option value="YIA">Yogyakarta (YIA)</option>
+                                <option value="KNO">Medan - Kualanamu (KNO)</option>
+                                <option value="UPG">Makassar (UPG)</option>
+                            </optgroup>
+                            <optgroup label="Internasional">
+                                <option value="SIN">Singapore - Changi (SIN)</option>
+                                <option value="KUL">Kuala Lumpur (KUL)</option>
+                                <option value="NRT">Tokyo - Narita (NRT)</option>
+                                <option value="HND">Tokyo - Haneda (HND)</option>
+                                <option value="ICN">Seoul - Incheon (ICN)</option>
+                                <option value="AMS">Amsterdam (AMS)</option>
+                                <option value="LHR">London - Heathrow (LHR)</option>
+                            </optgroup>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Arrival City</label>
+                        <select name="destination" class="form-select" required>
+                            <option value="" selected disabled>Pilih Kota Tujuan...</option>
+                            <optgroup label="Indonesia">
+                                <option value="DPS">Bali - Ngurah Rai (DPS)</option>
+                                <option value="CGK">Jakarta - Soekarno Hatta (CGK)</option>
+                                <option value="SUB">Surabaya - Juanda (SUB)</option>
+                                <option value="YIA">Yogyakarta (YIA)</option>
+                                <option value="KNO">Medan - Kualanamu (KNO)</option>
+                                <option value="UPG">Makassar (UPG)</option>
+                                <option value="LBJ">Labuan Bajo (LBJ)</option>
+                            </optgroup>
+                            <optgroup label="Internasional">
+                                <option value="SIN">Singapore - Changi (SIN)</option>
+                                <option value="KUL">Kuala Lumpur (KUL)</option>
+                                <option value="NRT">Tokyo - Narita (NRT)</option>
+                                <option value="HND">Tokyo - Haneda (HND)</option>
+                                <option value="ICN">Seoul - Incheon (ICN)</option>
+                                <option value="DMK">Bangkok - Don Mueang (DMK)</option>
+                            </optgroup>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Departure Date</label>
+                        <input type="date" name="departure_date" class="form-control" required>
+                    </div>
+
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" id="roundTripCheck">
+                        <label class="form-check-label" for="roundTripCheck">
+                            Round Trip?
+                        </label>
+                    </div>
+
+                    <div class="mb-4" id="returnDateDiv" style="display: none;">
+                        <label class="form-label fw-bold">Return Date</label>
+                        <input type="date" name="return_date" class="form-control">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100 py-2 fw-bold">Search Flight ✈️</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const checkbox = document.getElementById('roundTripCheck');
+    const returnDiv = document.getElementById('returnDateDiv');
+
+    checkbox.addEventListener('change', function() {
+        if (this.checked) {
+            returnDiv.style.display = 'block';
+        } else {
+            returnDiv.style.display = 'none';
+        }
+    });
+</script>
+{% endblock %}

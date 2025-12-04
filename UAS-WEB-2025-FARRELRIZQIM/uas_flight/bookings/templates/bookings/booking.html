@@ -1,0 +1,39 @@
+{% extends 'bookings/base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-header bg-white">
+                <h4 class="mb-0">Flight Booking</h4>
+            </div>
+            <div class="card-body">
+                
+                <div class="alert alert-light border mb-4">
+                    <strong>Flight Info:</strong><br>
+                    Airline: {{ flight.validatingAirlineCodes.0 }}<br>
+                    Price: {{ flight.price.currency }} {{ flight.price.total }}<br>
+                    Departure: {{ flight.itineraries.0.segments.0.departure.at }}
+                </div>
+
+                <form method="POST">
+                    {% csrf_token %}
+                    <h5 class="mb-3">Passenger Details</h5>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" name="passenger_name" class="form-control" required>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="form-label">Passport Number</label>
+                        <input type="text" name="passport_number" class="form-control" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-success w-100">Confirm Booking</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
